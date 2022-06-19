@@ -33,7 +33,8 @@ AVAILABLE_COMMANDS = (
     '/share@horoscopes_robot',
     '/horoscope@horoscopes_robot',
     '/help@horoscopes_robot',
-    '/start@horoscopes_robot')
+    '/start@horoscopes_robot',
+)
 HELP_TEXT = (
     "/start — send me this command to get basic info about how i work\n"
     "/help — send this command to get list of available commands\n"
@@ -43,12 +44,12 @@ HELP_TEXT = (
 ZODIACS = (
     'Aries ♈', 'Taurus ♉', 'Gemini ♊', 'Cancer ♋',
     'Leo ♌', 'Virgo ♍', 'Libra ♎', 'Scorpio ♏',
-    'Sagittarius ♐', 'Capricorn ♑', 'Aquarius ♒', 'Pisces ♓'
+    'Sagittarius ♐', 'Capricorn ♑', 'Aquarius ♒', 'Pisces ♓',
 )
-DAYS = ('Horoscope for today', 'Horoscope for tomorrow')
+DAYS = ('Horoscope for today', 'Horoscope for tomorrow', )
 
 
-# Class for holding users data
+# Class for holding user's data
 class UserData(StatesGroup):
     chosen_zodiac = State()
     chosen_day = State()
@@ -57,30 +58,16 @@ class UserData(StatesGroup):
 def get_sign_keyboard():
     """Creating keyboard for choosing zodiac sign."""
     zodiac_keyboard = ReplyKeyboardMarkup(selective=True)
-    zodiac_keyboard.add(
-        KeyboardButton(text='Aries ♈', ),
-        KeyboardButton(text='Taurus ♉', ),
-        KeyboardButton(text='Gemini ♊', ),
-        KeyboardButton(text='Cancer ♋', ),
-        KeyboardButton(text='Leo ♌', ),
-        KeyboardButton(text='Virgo ♍', ),
-        KeyboardButton(text='Libra ♎', ),
-        KeyboardButton(text='Scorpio ♏', ),
-        KeyboardButton(text='Sagittarius ♐', ),
-        KeyboardButton(text='Capricorn ♑', ),
-        KeyboardButton(text='Aquarius ♒', ),
-        KeyboardButton(text='Pisces ♓', ),
-    )
+    zodiac_buttons = [KeyboardButton(text=sign,) for sign in ZODIACS]
+    zodiac_keyboard.add(*zodiac_buttons)
     return zodiac_keyboard
 
 
 def get_day_keyboard():
     """Creating keyboard for choosing day."""
     day_keyboard = ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
-    day_keyboard.add(
-        KeyboardButton(text='Horoscope for today', ),
-        KeyboardButton(text='Horoscope for tomorrow', ),
-    )
+    day_buttons = [KeyboardButton(text=chosen_day,) for chosen_day in DAYS]
+    day_keyboard.add(*day_buttons)
     return day_keyboard
 
 
@@ -128,8 +115,6 @@ async def reply_help_msg(message: types.Message):
     await message.reply(
         f"<b>{message.from_user.full_name}</b>! I'm Horoscope Bot!\n"
         f"Check my commands list: \n" + HELP_TEXT,
-        # f"Also you can add me to your channels and get actual horoscope "
-        # f"information in any chat! \n"
         parse_mode=types.ParseMode.HTML
     )
 
@@ -150,7 +135,8 @@ async def choose_zodiac(message: types.Message, state: FSMContext):
     """This handler will be called when user press zodiac btn"""
     if message.text not in ZODIACS or message.content_type != ContentType.TEXT:
         await message.reply(
-            f"<b>{message.from_user.full_name}</b>! Please, choose your sign from keyboard below:",
+            f"<b>{message.from_user.full_name}</b>!"
+            f"Please, choose your sign from keyboard below:",
             reply_markup=get_sign_keyboard(),
             parse_mode=types.ParseMode.HTML,
         )
@@ -169,7 +155,8 @@ async def get_full_parse_data(message: types.Message, state: FSMContext):
     """This handler will be called when user press day btn."""
     if message.text not in DAYS or message.content_type != ContentType.TEXT:
         await message.reply(
-            f"<b>{message.from_user.full_name}</b>! Please, choose day from keyboard below:",
+            f"<b>{message.from_user.full_name}</b>!"
+            f"Please, choose day from keyboard below:",
             reply_markup=get_day_keyboard(),
             parse_mode=types.ParseMode.HTML,
         )
@@ -184,7 +171,8 @@ async def get_full_parse_data(message: types.Message, state: FSMContext):
         response = requests.post(ENDPOINT, params=user_params)
         horoscope_data = response.json()
         await message.reply(
-            f'<b>{data["chosen_zodiac"]} for {horoscope_data.get("current_date")}: \n</b>'
+            f'<b>{data["chosen_zodiac"]}'
+            f'for {horoscope_data.get("current_date")}: \n</b>'
             f'<b>Horoscope</b> — {horoscope_data.get("description")} \n'
             f'<b>Compatibility</b> — {horoscope_data.get("compatibility")} \n'
             f'<b>Mood</b> — {horoscope_data.get("mood")} \n'
@@ -195,7 +183,7 @@ async def get_full_parse_data(message: types.Message, state: FSMContext):
             parse_mode=types.ParseMode.HTML,
             reply_markup=types.ReplyKeyboardRemove()
         )
-    except ConnectionError as error:
+    except ConnectionError:
         logging.error('Endpoint is unreachable')
         await message.reply(
             "I'm sorry, my friend! My magic crystal ball is broken 🥺 "
@@ -215,8 +203,8 @@ if __name__ == '__main__':
     logging.basicConfig(
         level=logging.INFO,
         format=(
-            '%(asctime)s, тип лога - %(levelname)s, функция - %(funcName)s, '
-            'строка - %(lineno)d, сообщение - "%(message)s" || %(name)s'
+            '%(asctime)s -- %(levelname)s: def %(funcName)s in line #'
+            '%(lineno)d, logging message -- "%(message)s" || %(name)s'
         ),
         handlers=[
             logging.StreamHandler(stream=sys.stdout),
