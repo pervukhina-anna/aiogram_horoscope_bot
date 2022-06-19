@@ -140,8 +140,8 @@ async def get_full_parse_data(message: types.Message, state: FSMContext):
             parse_mode=types.ParseMode.HTML,
             reply_markup=types.ReplyKeyboardRemove()
         )
-    except ConnectionError:
-        logging.error('Endpoint is unreachable')
+    except Exception as error:
+        logging.error(f'{error} Endpoint is unreachable')
         await message.reply(
             "I'm sorry, my friend! My magic crystal ball is broken 🥺 "
             "Let's try next time!",
