@@ -1,7 +1,6 @@
 import logging
 import sys
 
-import requests
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
@@ -12,6 +11,7 @@ from aiogram.types import (
     InlineKeyboardButton,
 )
 
+from api_parse_horosc_bot import get_horoscope
 from consts import *
 
 
@@ -125,8 +125,7 @@ async def get_full_parse_data(message: types.Message, state: FSMContext):
             ('day', data['chosen_day']),
         )
     try:
-        response = requests.post(ENDPOINT, params=user_params)
-        horoscope_data = response.json()
+        horoscope_data = get_horoscope(ENDPOINT, params=user_params)
         await message.reply(
             f'<b>{data["chosen_zodiac"]}'
             f'for {horoscope_data.get("current_date")}: \n</b>'

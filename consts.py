@@ -36,7 +36,6 @@ AVAILABLE_COMMANDS = (
     '/help@horoscopes_robot',
     '/start@horoscopes_robot',
 )
-                     # + ZODIACS + DAYS
 
 
 def get_sign_keyboard():
