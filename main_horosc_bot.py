@@ -25,6 +25,11 @@ class UserData(StatesGroup):
     chosen_day = State()
 
 
+def check_tokens():
+    """Checking Tokens."""
+    return all([TELEGRAM_TOKEN])
+
+
 @dp.message_handler(
     lambda message: message.text not in AVAILABLE_COMMANDS,
     content_types=ContentType.ANY
@@ -163,4 +168,7 @@ if __name__ == '__main__':
             logging.StreamHandler(stream=sys.stdout),
         ],
     )
+    if not check_tokens():
+        logging.critical('Check Token in .env')
+        sys.exit('Check Token in .env')
     executor.start_polling(dp, skip_updates=True)
