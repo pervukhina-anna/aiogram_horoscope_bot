@@ -1,0 +1,1 @@
+worker: python main_horosc_bot.py
