@@ -30,10 +30,7 @@ class UserData(StatesGroup):
     content_types=ContentType.ANY
 )
 async def reply_unknown_command(message: types.Message):
-    """
-    This handler will be called when user sends unknown command or
-    unknown type of content.
-    """
+    """Reply to unknown command or unknown type of content."""
     await message.reply(
         "Sorry, i don't know what to answer 😥"
         "Please, choose command from this list:\n" + HELP_TEXT
@@ -42,7 +39,7 @@ async def reply_unknown_command(message: types.Message):
 
 @dp.message_handler(commands='start', )
 async def reply_start_msg(message: types.Message):
-    """This handler will be called when user sends `/start` command."""
+    """Reply to `/start` command."""
     await message.reply(
         f"Hello, <b>{message.from_user.full_name}</b>! I'm Horoscope Bot!\n"
         f"To get info about my abilities and available commands just "
@@ -54,7 +51,7 @@ async def reply_start_msg(message: types.Message):
 
 @dp.message_handler(commands='share', )
 async def reply_share_msg(message: types.Message):
-    """This handler will be called when user sends `/share` command."""
+    """Reply to `/share` command."""
     share_btn = InlineKeyboardMarkup()
     share_btn.add(InlineKeyboardButton(
         text='Horoscope Bot',
@@ -65,7 +62,7 @@ async def reply_share_msg(message: types.Message):
 
 @dp.message_handler(commands='help', )
 async def reply_help_msg(message: types.Message):
-    """This handler will be called when user sends `/help` command."""
+    """Reply to `/help` command."""
     await message.reply(
         f"<b>{message.from_user.full_name}</b>! I'm Horoscope Bot!\n"
         f"Check my commands list: \n" + HELP_TEXT,
@@ -75,7 +72,7 @@ async def reply_help_msg(message: types.Message):
 
 @dp.message_handler(commands='horoscope', )
 async def reply_horoscope_msg(message: types.Message, ):
-    """This handler will be called when user sends `/horoscope` command."""
+    """Reply to `/horoscope` command."""
     await message.reply(
         f"<b>{message.from_user.full_name}</b>! Choose your sign:",
         reply_markup=get_sign_keyboard(),
@@ -89,7 +86,7 @@ async def reply_horoscope_msg(message: types.Message, ):
     content_types=ContentType.ANY
 )
 async def choose_zodiac(message: types.Message, state: FSMContext):
-    """This handler will be called when user press zodiac btn"""
+    """Reply to zodiac btn"""
     if message.text not in ZODIACS or message.content_type != ContentType.TEXT:
         await message.reply(
             f"<b>{message.from_user.full_name}</b>!"
@@ -109,7 +106,7 @@ async def choose_zodiac(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=UserData.chosen_day, content_types=ContentType.ANY)
 async def get_full_parse_data(message: types.Message, state: FSMContext):
-    """This handler will be called when user press day btn."""
+    """Reply to day btn and sending final result."""
     if message.text not in DAYS or message.content_type != ContentType.TEXT:
         await message.reply(
             f"<b>{message.from_user.full_name}</b>!"
