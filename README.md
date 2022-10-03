@@ -1,7 +1,7 @@
 # Aiogram Horoscope Bot <img src="https://img.icons8.com/color/344/crystal-ball.png" height="24"/>
 
 
-### Описание
+## Описание
 Телеграм-бот, позволяющий узнать гороскоп для выбранного знака зодиака и на выбранный день.
 
 ![starting_img](https://user-images.githubusercontent.com/101391679/174481937-3ab10367-e3dd-4071-b3fe-de7395e6acd2.png)
@@ -20,38 +20,43 @@
 
 ![result](https://user-images.githubusercontent.com/101391679/174482176-a29ce9a1-fa7a-4106-9ea5-653a48915e37.png)
 
-### Технологии в проекте;  
-Python 3.9.13  
-Aiogram 2.20  
+## Технологии:  
+Python, Aiogram  
 
-### Установка, настройка:  
-* Клонируйте репозиторий
-* Установите и активируйте виртуальное окружение:
+<details>
+<summary><h2>Как запустить проект:</h2></summary>
 
+### *Клонируйте репозиторий:*
+```
+git@github.com:pervukhina-anna/aiogram_horoscope_bot.git
+```
+
+### *Установите и активируйте виртуальное окружение:*
 Win:
-```python
+```
 python -m venv venv
 venv/Scripts/activate
 ```
+
 Mac:
-```python
+```
 python3 -m venv venv
 source venv/bin/activate
 ```
-* Установите зависимости из файла requirements.txt
-```python
+
+### *Установите зависимости из файла requirements.txt:*
+```
 pip install -r requirements.txt
 ```
-* Создайте файл `.env` и сохраните в нем `TELEGRAM_TOKEN` (токен бота) и `TELEGRAM_CHAT_ID` (ваш id в телеграм)
-* Запустите бота
 
-### Документация:  
-[Telegram Bot API](https://core.telegram.org/bots/api)   
-[Документация Aiogram](https://docs.aiogram.dev/en/latest/index.html)   
+### *Создайте файл `.env` и сохраните в нем `TELEGRAM_TOKEN` (токен бота) и `TELEGRAM_CHAT_ID` (ваш id в телеграм). Пример заполнения файла:*
+```
+TELEGRAM_TOKEN = 0123456789:ABCmsndj-FfqVYl4eytRIYP58yoE7GP8
+TELEGRAM_CHAT_ID = 01234567
+```
 
-### Полезные статьи:  
-[Пишем Telegram-ботов на Python (v2)](https://mastergroosha.github.io/telegram-tutorial-2/)  
-[Aiogram. Разбираем FSM простыми словами](https://lolz.guru/threads/3769612/)  
-[Всё, о чём должен знать разработчик Телеграм-ботов](https://habr.com/ru/post/543676/)  
-[Асинхронный Telegram бот на языке Python 3 с использованием библиотеки aiogram](https://surik00.gitbooks.io/aiogram-lessons/content/)  
+### *Запустите бота*
+</details>
 
+## Разработчик:
+[Первухина Анна](https://github.com/pervukhina-anna)
