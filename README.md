@@ -1,7 +1,7 @@
 # Aiogram Horoscope Bot <img src="https://img.icons8.com/color/344/crystal-ball.png" height="24"/>
 
 
-## Описание
+## Описание:
 Телеграм-бот, позволяющий узнать гороскоп для выбранного знака зодиака и на выбранный день.
 
 ![starting_img](https://user-images.githubusercontent.com/101391679/174481937-3ab10367-e3dd-4071-b3fe-de7395e6acd2.png)
